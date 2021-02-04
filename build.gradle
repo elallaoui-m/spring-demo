@@ -32,7 +32,7 @@ test {
 
 project.version = scmVersion.version
 
-String imageName = "tkgregory/spring-boot-api-example:$version"
+String imageName = "elwiqo/spring-boot-api-example:$version"
 docker {
     name imageName
     files "build/libs/${bootJar.archiveFileName.get()}"
@@ -42,6 +42,6 @@ docker {
 dockerRun {
     name project.name
     image imageName
-    ports '8080:8080'
+    ports '8081:8080'
     clean true
 }
