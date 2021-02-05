@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+    def app
     // triggers {
     //     pollSCM 'H * * * *'
     // }
@@ -20,7 +20,7 @@ pipeline {
         }
 
         stage('Push image') {
-            docker.withRegistry('https://registry.hub.docker.com', 'docker') {            
+            docker.withRegistry('https://registry.hub.docker.com', 'docker-creds') {            
                 app.push("${env.BUILD_NUMBER}")            
                 app.push("latest")        
             }    
