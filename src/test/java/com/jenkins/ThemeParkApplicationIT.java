@@ -54,4 +54,15 @@ public class ThemeParkApplicationIT {
                 .andExpect(status().isOk())
                 .andReturn();
     }
+
+    @Test
+    public void addsNewRide() throws Exception {
+        String newRide = "{\"name\":\"Testing2\",\"description\":\"Sedate travelling ride.\",\"thrillFactor\":3,\"vomitFactor\":3}";
+        mockMvc.perform(MockMvcRequestBuilders.post("/ride")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(newRide)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+    }
 }
