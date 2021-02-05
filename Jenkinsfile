@@ -1,15 +1,9 @@
 pipeline {
-
-    environment {
-    registry = "elwiqo/spring-demo"
-    registryCredential = 'elwiqo'
-    dockerImage = ''
-    }
     agent any
 
-    triggers {
-        pollSCM 'H * * * *'
-    }
+    // triggers {
+    //     pollSCM 'H * * * *'
+    // }
     stages {
         stage('Build') {
             steps {
@@ -22,11 +16,14 @@ pipeline {
             }
         }
         stage('Building our image') {
-            steps{
-                script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
-            }
+            app = docker.build("elwiqo/spring-demo")
+        }
+
+        stage('Push image') {
+            docker.withRegistry('https://registry.hub.docker.com', 'docker') {            
+                app.push("${env.BUILD_NUMBER}")            
+                app.push("latest")        
+            }    
         }
     }
 }
