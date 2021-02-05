@@ -16,14 +16,18 @@ pipeline {
             }
         }
         stage('Building our image') {
-            app = docker.build("elwiqo/spring-demo")
+           steps {
+                dockerBuildAndPublish {
+                    repositoryName('elwiqo/spring-demo')
+                    tag('${BUILD_TIMESTAMP}-${GIT_REVISION,length=7}')
+                    registryCredentials('docker-creds')
+                    forcePull(false)
+                    createFingerprints(false)
+                    skipDecorate()
+                }
+            }
         }
 
-        stage('Push image') {
-            docker.withRegistry('https://registry.hub.docker.com', 'docker-creds') {            
-                app.push("${env.BUILD_NUMBER}")            
-                app.push("latest")        
-            }    
-        }
+        
     }
 }
