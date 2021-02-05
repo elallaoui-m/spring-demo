@@ -56,7 +56,7 @@ public class ThemeParkApplicationIT {
     }
 
     @Test
-    public void addsNewRide() throws Exception {
+    public void addsNewRide2() throws Exception {
         String newRide = "{\"name\":\"Testing2\",\"description\":\"Sedate travelling ride.\",\"thrillFactor\":3,\"vomitFactor\":3}";
         mockMvc.perform(MockMvcRequestBuilders.post("/ride")
                 .contentType(MediaType.APPLICATION_JSON)

@@ -1,4 +1,10 @@
 pipeline {
+
+    environment {
+    registry = "elwiqo/spring-demo"
+    registryCredential = 'elwiqo'
+    dockerImage = ''
+    }
     agent any
 
     triggers {
@@ -13,6 +19,13 @@ pipeline {
         stage('Test') {
             steps {
                 sh './gradlew test'
+            }
+        }
+        stage('Building our image') {
+            steps{
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
             }
         }
     }
